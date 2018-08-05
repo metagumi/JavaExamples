@@ -20,6 +20,7 @@ public class FirstApp {
             prop.setProperty("dbuser","slyone");
             prop.setProperty("dbpassword","password");
 
+
             // Save properties to root folder
             prop.store(output, null);
         } catch ( IOException io) {
