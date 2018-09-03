@@ -1,4 +1,4 @@
-package com.slyone.jdbc;
+package com.slyone.jdbc.select;
 
 import java.sql.*;
 
@@ -14,6 +14,7 @@ public class AddPresident {
             stmt = conn.createStatement();
             // Begin transaction
             conn.setAutoCommit(false);
+            //args[0] = "Obama";
             manipulateData(args);
             conn.commit();
             // Cleanup
@@ -24,8 +25,8 @@ public class AddPresident {
         }
     }
 
-    public static void checkArguments(String args[]) {
-        if (args.length != 3) {
+    public static void checkArguments(String [] args) {
+        if (args.length <= 6) {
             String msg = "USAGE: java AddPresident " +
                     "<lastname> <firstname> <suffix> <city> <state> <birth> <death>";
             throw new IllegalArgumentException(msg);
@@ -66,8 +67,54 @@ public class AddPresident {
         }
     }
 
-    public static void manipulateData (String args[])
+    public static void manipulateData (String [] args)
             throws SQLException   {
+        String sql;
+        ResultSet rslt = null;
+
+        try {
+            // get new President
+            sql = "SELECT MAX(id) AS " + "Max_id FROM president";
+            rslt = stmt.executeQuery(sql);
+           int authID = 0;
+           String dummy = " ";
+           while (rslt.next()) {
+               authID = rslt.getInt("Max_id")+ 1;
+           }
+           System.out.println("next id " + authID);
+            // add president
+            String last_neme = args[0];
+            String first_name = args[1];
+            String suffix = args[2];
+            String city = args[3];
+            String state = args[4];
+            String birth = args[5];
+            String death = args[6];
+            sql = "INSERT INTO president (last_name, first_name, suffix, city, state, birth, death) values("+
+                    "'last_name'"+","+"'first_name'"+","+"'null'"+","+"'city'"+","+"'null'"+","+"'birth'"+","+"'death'"+")";
+            //stmt.execute(sql);
+            System.out.println(sql);
+            conn.rollback();
+        } catch (SQLException e) {
+            conn.rollback();
+            throw new SQLException(e.getMessage());
+        }
+        // modify code to add data to table  see new table layout
+        //String query = "select last_name, first_name, birth from president";
+
+        //Statement stmt = conn.createStatement();
+        //rslt = stmt.executeQuery(query);
+
+        //String lastName, firstName, birth;
+
+        //while (rslt.next()) {
+        //    lastName = rslt.getString("last_name");
+        //    firstName = rslt.getString("first_name");
+        //    birth = rslt.getString("birth");
+        //    System.out.println(lastName + "\t\t" + firstName + "\t" + birth);
+        //}
+
+        //conn.close();
 
     }
 }

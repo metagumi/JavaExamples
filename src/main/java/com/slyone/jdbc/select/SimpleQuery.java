@@ -1,4 +1,4 @@
-package com.slyone.jdbc;
+package com.slyone.jdbc.select;
 
 import java.io.FileInputStream;
 import java.sql.*;
@@ -40,7 +40,7 @@ public class SimpleQuery {
                 System.out.println(lastName + "\t\t" + firstName + "\t" + birth);
             }
 
-            //conn.close();
+            conn.close();
 
         } catch (SQLException sqle) {
             sqle.printStackTrace();
