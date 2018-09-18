@@ -23,6 +23,7 @@ public class SimpleQuery {
             String dbuser = "scharvey";
             String password = "kSQgx2Mc";
 
+            //setTimestamp(int,Timestamp).
             conn = DriverManager.getConnection(url, dbuser, password);
             System.out.println("Database connection made");
 
